@@ -7,6 +7,7 @@ const nodemailer = require('nodemailer');
 const User = require('./models/User'); // Assuming you have a User model defined
 const bcrypt = require('bcryptjs');
 
+// Load environment variables from .env file
 dotenv.config();
 
 const app = express();
@@ -14,27 +15,29 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-}).then(() => {
+})
+.then(() => {
     console.log('MongoDB connected');
-}).catch(err => console.log(err));
+})
+.catch(err => console.log('MongoDB connection error: ', err));
 
 // Create a Nodemailer transporter
 const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE, // e.g., 'gmail'
     host: "smtp.gmail.com",
     port: 587,
-    secure: false, 
+    secure: false, // Use true for port 465
     auth: {
         user: process.env.EMAIL_USERNAME,  // Your email
         pass: process.env.EMAIL_PASSWORD,  // Your app password or OAuth token
     },
 });
-
 
 // Function to send an email
 const sendEmail = async (to, subject, text, html) => {
@@ -74,6 +77,12 @@ app.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).send('User already exists');
+        }
+
         // Hash the password before saving
         const hashedPassword = await bcrypt.hash(password, 10);
         
@@ -82,11 +91,11 @@ app.post('/register', async (req, res) => {
         await newUser.save();
 
         // Send confirmation email
-        sendEmail(email, 'Registration Successful', 'Welcome! You have successfully registered.');
+        await sendEmail(email, 'Registration Successful', 'Welcome! You have successfully registered.');
 
         res.status(201).send('Registration successful! Please check your email.');
     } catch (error) {
-        console.error(error);
+        console.error('Registration error:', error);
         res.status(500).send('Server error');
     }
 });
@@ -113,7 +122,7 @@ app.post('/login', async (req, res) => {
         
         res.json({ token });
     } catch (error) {
-        console.error(error);
+        console.error('Login error:', error);
         res.status(500).send('Server error');
     }
 });
