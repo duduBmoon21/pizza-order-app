@@ -1,0 +1,19 @@
+# Node.js dependencies
+node_modules
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+
+# Optional npm cache files
+.npm/
+
+# MacOS specific (if you're working on macOS)
+.DS_Store
+
+# IDE/Editor specific files
+.vscode/
+.idea/
