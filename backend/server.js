@@ -35,31 +35,15 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-// Function to send an email
-// const sendEmail = (to, subject, text) => {
-//     const mailOptions = {
-//         from: process.env.EMAIL_USERNAME,
-//         to: to,
-//         subject: subject,
-//         text: text,
-//     };
-
-//     transporter.sendMail(mailOptions, (error, info) => {
-//         if (error) {
-//             return console.log('Error: ' + error);
-//         }
-//         console.log('Email sent: ' + info.response);
-//     });
-// };
 
 // Function to send an email
 const sendEmail = async (to, subject, text, html) => {
     const mailOptions = {
-        from: `"Maddison Foo Koch 👻" <${process.env.EMAIL_USERNAME}>`, // sender address
-        to: to, // list of receivers
-        subject: subject, // Subject line
-        text: text, // plain text body
-        html: html, // html body
+        from: `"Eleanor Web Text" <${process.env.EMAIL_USERNAME}>`, // sender address
+        to: "eleanortefera12@gmail.com", // list of receivers
+        subject: "send mssg using NodeMailer and Gmail", // Subject line
+        text: "Hello World!", // plain text body
+        html: "<b> My Mssg</b>", // 
     };
 
     try {
