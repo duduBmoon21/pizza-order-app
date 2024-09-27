@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGO_URI, {
 // Create a Nodemailer transporter
 const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE, // e.g., 'gmail'
-    host: "smtp.ethereal.email",
+    host: "smtp.gmail.com",
     port: 587,
     secure: false, 
     auth: {
