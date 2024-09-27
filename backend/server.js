@@ -69,8 +69,6 @@ app.get('/test-email', async (req, res) => {
     }
 });
 
-
-
 // User Registration Route
 app.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
