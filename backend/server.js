@@ -40,10 +40,10 @@ const transporter = nodemailer.createTransport({
 const sendEmail = async (to, subject, text, html) => {
     const mailOptions = {
         from: `"Eleanor Web Text" <${process.env.EMAIL_USERNAME}>`, // sender address
-        to: "eleanortefera12@gmail.com", // list of receivers
-        subject: "send mssg using NodeMailer and Gmail", // Subject line
-        text: "Hello World!", // plain text body
-        html: "<b> My Mssg</b>", // 
+        to: to, // list of receivers
+        subject: subject, // Subject line
+        text: text, // plain text body
+        html: html, // html body
     };
 
     try {
@@ -53,6 +53,23 @@ const sendEmail = async (to, subject, text, html) => {
         console.error('Error sending email:', error);
     }
 };
+
+// Test Route for Sending Email
+app.get('/test-email', async (req, res) => {
+    try {
+        await sendEmail(
+            'eleanortefera12@gmail.com', // Change this to your test email address
+            'Test Email Subject',
+            'This is a test email sent from Node.js using Nodemailer.',
+            '<b>This is a test email sent from Node.js using Nodemailer.</b>'
+        );
+        res.send('Test email sent successfully!');
+    } catch (error) {
+        res.status(500).send('Failed to send email');
+    }
+});
+
+
 
 // User Registration Route
 app.post('/register', async (req, res) => {
