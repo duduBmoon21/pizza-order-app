@@ -1,12 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
-import store from './redux/store';
-import App from './App';
-import './index.css';
+import App from './App.jsx'; // Importing App.jsx
 
-ReactDOM.createRoot(document.getElementById('app')).render(
-    <Provider store={store}>
-       <App />
-    </Provider>
-);
+
+const root = ReactDOM.createRoot(document.getElementById('app'));
+root.render(<App />);

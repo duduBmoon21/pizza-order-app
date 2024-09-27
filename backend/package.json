@@ -19,7 +19,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.22"
   },
   "keywords": [],
   "author": "",
